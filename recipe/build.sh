@@ -4,14 +4,13 @@ set -ex
 
 mkdir build
 cd build
-cmake -G "Unix Makefiles" \
-      -DCMAKE_INSTALL_PREFIX:PATH="${PREFIX}" \
-      -DCMAKE_BUILD_TYPE:STRING=Release \
-      -DENABLE_TESTS=OFF \
-      -DCMAKE_LIBRARY_PATH="${PREFIX}/lib" \
-      -DCMAKE_INCLUDE_PATH="${PREFIX}/include" \
+cmake ${CMAKE_ARGS} -G "Unix Makefiles" \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=ON \
+      -DDRACO_TESTS=OFF \
       ..
 
 # CircleCI offers two cores.
-make -j $CPU_COUNT
+make -j $CPU_COUNT ${VERBOSE_CM}
+
 make install
