@@ -8,6 +8,7 @@ cmake ${CMAKE_ARGS} -G "Unix Makefiles" \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=ON \
       -DDRACO_TESTS=OFF \
+      -DDRACO_TRANSCODER_SUPPORTED=ON \
       ..
 
 # CircleCI offers two cores.

@@ -6,13 +6,13 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/google/draco/archive/{{ version }}.tar.gz
-  sha256: bf6b105b79223eab2b86795363dfe5e5356050006a96521477973aba8f036fe1
+  git_url: https://github.com/google/draco.git  
+  git_rev: {{ version }}
   patches:
     - start-group.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and vc<14]
 
 requirements:
@@ -24,6 +24,7 @@ requirements:
 test:
   commands:
     - draco_encoder -h
+    - draco_transcoder -h
 
 about:
   home: https://github.com/google/draco/
