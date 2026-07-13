@@ -1,42 +1,45 @@
-{% set name = "draco" %}
-{% set version = "1.5.7" %}
+schema_version: 1
+
+context:
+  name: draco
+  version: "1.5.7"
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: ${{ name|lower }}
+  version: ${{ version }}
 
 source:
-  url: https://github.com/google/draco/archive/{{ version }}.tar.gz
+  url: https://github.com/google/draco/archive/${{ version }}.tar.gz
   sha256: bf6b105b79223eab2b86795363dfe5e5356050006a96521477973aba8f036fe1
   patches:
     - start-group.patch
 
 build:
   number: 0
-  skip: true  # [win and vc<14]
+  skip: win and vc<14
 
 requirements:
   build:
     - cmake
     - make
-    - {{ compiler('cxx') }}
+    - ${{ compiler('cxx') }}
 
-test:
-  commands:
-    - draco_encoder -h
+tests:
+  - script:
+      - draco_encoder -h
 
 about:
-  home: https://github.com/google/draco/
   license: Apache-2.0
-  license_family: Apache
   license_file: LICENSE
   summary: A library for compressing and decompressing 3D geometric meshes and point clouds
   description: |
     A library for compressing and decompressing 3D geometric meshes and point clouds
-  doc_url: https://google.github.io/draco/
-  dev_url: https://github.com/google/draco
+  homepage: https://github.com/google/draco/
+  repository: https://github.com/google/draco
+  documentation: https://google.github.io/draco/
 
 extra:
   recipe-maintainers:
     - hobu
     - chambbj
+
