@@ -16,6 +16,7 @@ source:
     - cxx17-filesystem.patch
     - tinygltf-fscallbacks.patch
     - gltf-utils-cstdint.patch
+    - cmp0219-macro-backslash.patch
 
 build:
   number: 2
