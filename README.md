@@ -60,13 +60,6 @@ Current build status
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/draco-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
                 </a>
               </td>
-            </tr><tr>
-              <td>win_64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6271&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/draco-feedstock?branchName=main&jobName=win&configuration=win%20win_64_" alt="variant">
-                </a>
-              </td>
             </tr>
           </tbody>
         </table>
@@ -81,6 +74,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-draco-green.svg)](https://anaconda.org/conda-forge/draco) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/draco.svg)](https://anaconda.org/conda-forge/draco) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/draco.svg)](https://anaconda.org/conda-forge/draco) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/draco.svg)](https://anaconda.org/conda-forge/draco) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-draco--transcoder-green.svg)](https://anaconda.org/conda-forge/draco-transcoder) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/draco-transcoder.svg)](https://anaconda.org/conda-forge/draco-transcoder) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/draco-transcoder.svg)](https://anaconda.org/conda-forge/draco-transcoder) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/draco-transcoder.svg)](https://anaconda.org/conda-forge/draco-transcoder) |
 
 Installing draco
 ================
@@ -92,31 +86,73 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `draco` can be installed with `conda`:
+How to use
+----------
+
+<details>
+<summary>With conda</summary>
 
 ```
-conda install draco
+conda install draco draco-transcoder
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
-mamba install draco
+mamba install draco draco-transcoder
 ```
 
-It is possible to list all of the versions of `draco` available on your platform with `conda`:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+# for adding to your local project
+pixi add draco draco-transcoder
+# for installing globally
+pixi global install draco draco-transcoder
+```
+
+</details>
+
+Search package versions
+-----------------------
+
+It is possible to list all of the versions of `draco` available on your platform:
+
+<details>
+<summary>With conda</summary>
 
 ```
 conda search draco --channel conda-forge
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
 mamba search draco --channel conda-forge
 ```
 
-Alternatively, `mamba repoquery` may provide more information:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+pixi search draco --channel conda-forge
+```
+
+</details>
+
+<details>
+<summary>With mamba repoquery, which may provide more information</summary>
 
 ```
 # Search all versions available on your platform:
@@ -128,6 +164,8 @@ mamba repoquery whoneeds draco --channel conda-forge
 # List dependencies of `draco`:
 mamba repoquery depends draco --channel conda-forge
 ```
+
+</details>
 
 
 About conda-forge

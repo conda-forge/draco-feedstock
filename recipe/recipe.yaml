@@ -4,8 +4,8 @@ context:
   name: draco
   version: "1.5.7"
 
-package:
-  name: ${{ name|lower }}
+recipe:
+  name: ${{ name|lower }}-split
   version: ${{ version }}
 
 source:
@@ -13,21 +13,60 @@ source:
   sha256: bf6b105b79223eab2b86795363dfe5e5356050006a96521477973aba8f036fe1
   patches:
     - start-group.patch
+    - cxx17-filesystem.patch
+    - tinygltf-fscallbacks.patch
+    - gltf-utils-cstdint.patch
+    - cmp0219-macro-backslash.patch
 
 build:
-  number: 1
+  number: 2
   skip: win and vc<14
 
-requirements:
-  build:
-    - cmake
-    - make
-    - ${{ compiler('cxx') }}
-    - ${{ stdlib("c") }}
+outputs:
+  - package:
+      name: ${{ name|lower }}
+    build:
+      script:
+        env:
+          DRACO_TRANSCODER_SUPPORTED: "OFF"
+        content:
+          - if: unix
+            then: bash ${RECIPE_DIR}/build.sh
+            else: call %RECIPE_DIR%\build.bat
+    requirements:
+      build:
+        - cmake
+        - make
+        - ${{ compiler('cxx') }}
+        - ${{ stdlib("c") }}
+    tests:
+      - script:
+          - draco_encoder -h
 
-tests:
-  - script:
-      - draco_encoder -h
+  - package:
+      name: draco-transcoder
+    build:
+      script:
+        env:
+          DRACO_TRANSCODER_SUPPORTED: "ON"
+          DRACO_INSTALL_TRANSCODER_ONLY: "ON"
+          DRACO_BUILD_SHARED_LIBS: "OFF"
+        content:
+          - if: unix
+            then: bash ${RECIPE_DIR}/build.sh
+            else: call %RECIPE_DIR%\build.bat
+    requirements:
+      build:
+        - cmake
+        - make
+        - ${{ compiler('cxx') }}
+        - ${{ stdlib("c") }}
+      host:
+        - eigen <5
+        - tinygltf >=2.8.8
+    tests:
+      - script:
+          - draco_transcoder -h
 
 about:
   license: Apache-2.0

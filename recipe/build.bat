@@ -1,18 +1,34 @@
 mkdir build
 cd build
 
+if "%DRACO_TRANSCODER_SUPPORTED%"=="" set DRACO_TRANSCODER_SUPPORTED=OFF
+if "%DRACO_BUILD_SHARED_LIBS%"=="" set DRACO_BUILD_SHARED_LIBS=OFF
+if "%DRACO_INSTALL_TRANSCODER_ONLY%"=="" set DRACO_INSTALL_TRANSCODER_ONLY=OFF
+
+set TRANSCODER_ARGS=
+if "%DRACO_TRANSCODER_SUPPORTED%"=="ON" set TRANSCODER_ARGS=-DDRACO_EIGEN_PATH="%LIBRARY_INC%\eigen3" -DDRACO_FILESYSTEM_PATH="%LIBRARY_INC%" -DDRACO_TINYGLTF_PATH="%PREFIX%\include"
+
 cmake -G "NMake Makefiles" ^
       -DCMAKE_INSTALL_PREFIX:PATH="%LIBRARY_PREFIX%" ^
       -DCMAKE_BUILD_TYPE:STRING=Release ^
       -DCMAKE_LIBRARY_PATH="%LIBRARY_LIB%" ^
       -DCMAKE_INCLUDE_PATH="%INCLUDE_INC%" ^
-      -DBUILD_SHARED_LIBS=OFF ^
+      -DBUILD_SHARED_LIBS=%DRACO_BUILD_SHARED_LIBS% ^
+      -DDRACO_TRANSCODER_SUPPORTED=%DRACO_TRANSCODER_SUPPORTED% ^
+      -DCMAKE_DISABLE_FIND_PACKAGE_Python=ON ^
+      -DCMAKE_DISABLE_FIND_PACKAGE_Python3=ON ^
+      %TRANSCODER_ARGS% ^
       %SRC_DIR%
 if errorlevel 1 exit 1
 
 nmake
 if errorlevel 1 exit 1
 
-nmake install
-if errorlevel 1 exit 1
-
+if "%DRACO_INSTALL_TRANSCODER_ONLY%"=="ON" (
+    if not exist "%LIBRARY_BIN%" mkdir "%LIBRARY_BIN%"
+    copy draco_transcoder.exe "%LIBRARY_BIN%\"
+    if errorlevel 1 exit 1
+) else (
+    nmake install
+    if errorlevel 1 exit 1
+)

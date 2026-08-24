@@ -1,0 +1,12 @@
+diff --git a/src/draco/io/gltf_decoder.cc b/src/draco/io/gltf_decoder.cc
+index 1e1da2d..8846371 100644
+--- a/src/draco/io/gltf_decoder.cc
++++ b/src/draco/io/gltf_decoder.cc
+@@ -497,6 +497,7 @@ Status GltfDecoder::LoadFile(const std::string &file_name,
+       // TinyGLTF's ExpandFilePath does not do filesystem i/o, so it's safe to
+       // use in all environments.
+       &tinygltf::ExpandFilePath, &ReadWholeFile, &WriteWholeFile,
++      &tinygltf::GetFileSizeInBytes,
+       reinterpret_cast<void *>(input_files)};
+ 
+   loader.SetFsCallbacks(fs_callbacks);

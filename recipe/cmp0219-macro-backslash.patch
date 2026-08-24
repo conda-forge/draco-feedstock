@@ -1,0 +1,26 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e7b8f15..ec9f255 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -13,6 +13,21 @@
+ # the License.
+ 
+ cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
++
++# conda-forge: Windows host/build prefixes and the eigen/tinygltf/filesystem
++# path overrides below are absolute paths containing backslashes. Several
++# draco_add_library()/draco_add_executable() call sites in this project are
++# CMake macros, and pre-3.0 (CMP0219 OLD) argument handling re-interprets
++# backslashes inside macro arguments as escape sequences. That turns a path
++# such as "C:\\Users\\...\\include" into an invalid escape ("\\U") once it
++# reaches cmake_parse_arguments(), aborting configuration with:
++#   "Invalid character escape '\\U'."
++# Opting in to the modern (NEW) behavior makes macros preserve backslashes
++# literally, matching how functions already behave, and avoids the error.
++if(POLICY CMP0219)
++  cmake_policy(SET CMP0219 NEW)
++endif()
++
+ if(DRACO_TRANSCODER_SUPPORTED)
+   set(CMAKE_CXX_STANDARD 17)
+ endif()
