@@ -84,6 +84,7 @@ about:
   documentation: https://google.github.io/draco/
 
 extra:
+  feedstock-name: draco
   recipe-maintainers:
     - hobu
     - chambbj
