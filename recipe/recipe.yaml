@@ -19,7 +19,7 @@ source:
     - cmp0219-macro-backslash.patch
 
 build:
-  number: 2
+  number: 3
   skip: win and vc<14
 
 outputs:
@@ -39,6 +39,11 @@ outputs:
         - make
         - ${{ compiler('cxx') }}
         - ${{ stdlib("c") }}
+      # Unix packages expose a versioned shared library. Windows links Draco
+      # statically, so it does not need a runtime ABI constraint.
+      run_exports:
+        - if: unix
+          then: ${{ pin_subpackage("draco", upper_bound="x.x.x") }}
     tests:
       - script:
           - draco_encoder -h
@@ -79,6 +84,7 @@ about:
   documentation: https://google.github.io/draco/
 
 extra:
+  feedstock-name: draco
   recipe-maintainers:
     - hobu
     - chambbj
