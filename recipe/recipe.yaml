@@ -36,7 +36,7 @@ outputs:
     requirements:
       build:
         - cmake
-        - make
+        - ninja
         - ${{ compiler('cxx') }}
         - ${{ stdlib("c") }}
       # Unix packages expose a versioned shared library. Windows links Draco
@@ -63,7 +63,7 @@ outputs:
     requirements:
       build:
         - cmake
-        - make
+        - ninja
         - ${{ compiler('cxx') }}
         - ${{ stdlib("c") }}
       host:
