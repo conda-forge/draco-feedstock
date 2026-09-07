@@ -19,7 +19,7 @@ source:
     - cmp0219-macro-backslash.patch
 
 build:
-  number: 3
+  number: 4
   skip: win and vc<14
 
 outputs:
