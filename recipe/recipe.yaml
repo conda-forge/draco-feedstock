@@ -17,6 +17,7 @@ source:
     - tinygltf-fscallbacks.patch
     - gltf-utils-cstdint.patch
     - cmp0219-macro-backslash.patch
+    - eigen5-statusor-value-types.patch
 
 build:
   number: 4
@@ -67,7 +68,7 @@ outputs:
         - ${{ compiler('cxx') }}
         - ${{ stdlib("c") }}
       host:
-        - eigen <5
+        - eigen
         - tinygltf >=2.8.8
     tests:
       - script:
