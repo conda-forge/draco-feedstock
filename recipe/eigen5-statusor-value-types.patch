@@ -1,0 +1,40 @@
+diff --git a/src/draco/scene/trs_matrix.h b/src/draco/scene/trs_matrix.h
+index 92f7d0f..ed3a5c7 100644
+--- a/src/draco/scene/trs_matrix.h
++++ b/src/draco/scene/trs_matrix.h
+@@ -45,7 +45,7 @@ class TrsMatrix {
+     return *this;
+   }
+   bool MatrixSet() const { return matrix_set_; }
+-  StatusOr<const Eigen::Matrix4d> Matrix() const {
++  StatusOr<Eigen::Matrix4d> Matrix() const {
+     if (!matrix_set_) {
+       return Status(Status::DRACO_ERROR, "Matrix is not set.");
+     }
+@@ -58,7 +58,7 @@ class TrsMatrix {
+     return *this;
+   }
+   bool TranslationSet() const { return translation_set_; }
+-  StatusOr<const Eigen::Vector3d> Translation() const {
++  StatusOr<Eigen::Vector3d> Translation() const {
+     if (!translation_set_) {
+       return Status(Status::DRACO_ERROR, "Translation is not set.");
+     }
+@@ -71,7 +71,7 @@ class TrsMatrix {
+     return *this;
+   }
+   bool RotationSet() const { return rotation_set_; }
+-  StatusOr<const Eigen::Quaterniond> Rotation() const {
++  StatusOr<Eigen::Quaterniond> Rotation() const {
+     if (!rotation_set_) {
+       return Status(Status::DRACO_ERROR, "Rotation is not set.");
+     }
+@@ -84,7 +84,7 @@ class TrsMatrix {
+     return *this;
+   }
+   bool ScaleSet() const { return scale_set_; }
+-  StatusOr<const Eigen::Vector3d> Scale() const {
++  StatusOr<Eigen::Vector3d> Scale() const {
+     if (!scale_set_) {
+       return Status(Status::DRACO_ERROR, "Scale is not set.");
+     }

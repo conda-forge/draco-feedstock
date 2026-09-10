@@ -8,7 +8,7 @@ if "%DRACO_INSTALL_TRANSCODER_ONLY%"=="" set DRACO_INSTALL_TRANSCODER_ONLY=OFF
 set TRANSCODER_ARGS=
 if "%DRACO_TRANSCODER_SUPPORTED%"=="ON" set TRANSCODER_ARGS=-DDRACO_EIGEN_PATH="%LIBRARY_INC%\eigen3" -DDRACO_FILESYSTEM_PATH="%LIBRARY_INC%" -DDRACO_TINYGLTF_PATH="%PREFIX%\include"
 
-cmake -G "NMake Makefiles" ^
+cmake -G "Ninja" ^
       -DCMAKE_INSTALL_PREFIX:PATH="%LIBRARY_PREFIX%" ^
       -DCMAKE_BUILD_TYPE:STRING=Release ^
       -DCMAKE_LIBRARY_PATH="%LIBRARY_LIB%" ^
@@ -21,7 +21,7 @@ cmake -G "NMake Makefiles" ^
       %SRC_DIR%
 if errorlevel 1 exit 1
 
-nmake
+ninja
 if errorlevel 1 exit 1
 
 if "%DRACO_INSTALL_TRANSCODER_ONLY%"=="ON" (
@@ -29,6 +29,6 @@ if "%DRACO_INSTALL_TRANSCODER_ONLY%"=="ON" (
     copy draco_transcoder.exe "%LIBRARY_BIN%\"
     if errorlevel 1 exit 1
 ) else (
-    nmake install
+    ninja install
     if errorlevel 1 exit 1
 )

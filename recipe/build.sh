@@ -18,7 +18,7 @@ if [[ "${DRACO_TRANSCODER_SUPPORTED}" == "ON" ]]; then
     )
 fi
 
-cmake ${CMAKE_ARGS} -G "Unix Makefiles" \
+cmake ${CMAKE_ARGS} -G "Ninja" \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=${DRACO_BUILD_SHARED_LIBS} \
       -DDRACO_TRANSCODER_SUPPORTED=${DRACO_TRANSCODER_SUPPORTED} \
@@ -29,11 +29,11 @@ cmake ${CMAKE_ARGS} -G "Unix Makefiles" \
       ..
 
 # CircleCI offers two cores.
-make -j $CPU_COUNT ${VERBOSE_CM}
+ninja
 
 if [[ "${DRACO_INSTALL_TRANSCODER_ONLY}" == "ON" ]]; then
     mkdir -p "${PREFIX}/bin"
     cp draco_transcoder "${PREFIX}/bin/"
 else
-    make install
+    ninja install
 fi
