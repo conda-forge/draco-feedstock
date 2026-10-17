@@ -14,7 +14,7 @@ source:
   patches:
     - start-group.patch
     - cxx17-filesystem.patch
-    - tinygltf-fscallbacks.patch
+    - tinygltf-fscallbacks-1.5.9.patch
     - gltf-utils-cstdint.patch
     - cmp0219-macro-backslash.patch
     - eigen5-statusor-value-types.patch
