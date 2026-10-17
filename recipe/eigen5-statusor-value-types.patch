@@ -1,26 +1,34 @@
+Keep both the return types and the explicit error-path constructors added in
+Draco 1.5.9 non-const for Eigen 5 compatibility.
+
 diff --git a/src/draco/scene/trs_matrix.h b/src/draco/scene/trs_matrix.h
-index 92f7d0f..ed3a5c7 100644
 --- a/src/draco/scene/trs_matrix.h
 +++ b/src/draco/scene/trs_matrix.h
-@@ -45,7 +45,7 @@ class TrsMatrix {
+@@ -45,9 +45,9 @@
      return *this;
    }
    bool MatrixSet() const { return matrix_set_; }
 -  StatusOr<const Eigen::Matrix4d> Matrix() const {
 +  StatusOr<Eigen::Matrix4d> Matrix() const {
      if (!matrix_set_) {
-       return Status(Status::DRACO_ERROR, "Matrix is not set.");
+-      return StatusOr<const Eigen::Matrix4d>(
++      return StatusOr<Eigen::Matrix4d>(
+           Status(Status::DRACO_ERROR, "Matrix is not set."), {});
      }
-@@ -58,7 +58,7 @@ class TrsMatrix {
+     return matrix_;
+@@ -59,9 +59,9 @@
      return *this;
    }
    bool TranslationSet() const { return translation_set_; }
 -  StatusOr<const Eigen::Vector3d> Translation() const {
 +  StatusOr<Eigen::Vector3d> Translation() const {
      if (!translation_set_) {
-       return Status(Status::DRACO_ERROR, "Translation is not set.");
+-      return StatusOr<const Eigen::Vector3d>(
++      return StatusOr<Eigen::Vector3d>(
+           Status(Status::DRACO_ERROR, "Translation is not set."), {});
      }
-@@ -71,7 +71,7 @@ class TrsMatrix {
+     return translation_;
+@@ -73,7 +73,7 @@
      return *this;
    }
    bool RotationSet() const { return rotation_set_; }
@@ -29,12 +37,15 @@ index 92f7d0f..ed3a5c7 100644
      if (!rotation_set_) {
        return Status(Status::DRACO_ERROR, "Rotation is not set.");
      }
-@@ -84,7 +84,7 @@ class TrsMatrix {
+@@ -86,9 +86,9 @@
      return *this;
    }
    bool ScaleSet() const { return scale_set_; }
 -  StatusOr<const Eigen::Vector3d> Scale() const {
 +  StatusOr<Eigen::Vector3d> Scale() const {
      if (!scale_set_) {
-       return Status(Status::DRACO_ERROR, "Scale is not set.");
+-      return StatusOr<const Eigen::Vector3d>(
++      return StatusOr<Eigen::Vector3d>(
+           Status(Status::DRACO_ERROR, "Scale is not set."), {});
      }
+     return scale_;

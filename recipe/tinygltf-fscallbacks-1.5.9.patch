@@ -1,0 +1,16 @@
+Draco 1.5.9 initializes FsCallbacks by member instead of using an aggregate.
+Set the file-size callback available in tinygltf >=2.8.8. In tinygltf 2.9.1,
+leaving it unset causes SetFsCallbacks to reject the entire callback set,
+silently bypassing Draco's file readers and input-file tracking.
+
+diff --git a/src/draco/io/gltf_decoder.cc b/src/draco/io/gltf_decoder.cc
+--- a/src/draco/io/gltf_decoder.cc
++++ b/src/draco/io/gltf_decoder.cc
+@@ -531,6 +531,7 @@ Status GltfDecoder::LoadFile(const std::string& file_name,
+   fs_callbacks.ExpandFilePath = &tinygltf::ExpandFilePath;
+   fs_callbacks.ReadWholeFile = &ReadWholeFile;
+   fs_callbacks.WriteWholeFile = &WriteWholeFile;
++  fs_callbacks.GetFileSizeInBytes = &tinygltf::GetFileSizeInBytes;
+   fs_callbacks.user_data = reinterpret_cast<void*>(input_files);
+ 
+   loader.SetFsCallbacks(fs_callbacks);
